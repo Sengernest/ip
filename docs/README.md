@@ -1,4 +1,4 @@
-# Duke User Guide
+# Sengernest User Guide
 
 // Update the title above to match the actual product name
 
