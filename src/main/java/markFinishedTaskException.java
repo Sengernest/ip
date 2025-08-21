@@ -1,7 +1,5 @@
-package PACKAGE_NAME;
-
-public class markedFinishedTaskException extends RuntimeException {
-  public markedFinishedTaskException(String message) {
-    super(message);
-  }
+public class markFinishedTaskException extends Exception {
+    public markFinishedTaskException(String message) {
+        super(message);
+    }
 }

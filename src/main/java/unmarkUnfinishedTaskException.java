@@ -1,5 +1,5 @@
-public class unfinishedTaskException extends Exception {
-    public unfinishedTaskException(String message) {
+public class unmarkUnfinishedTaskException extends Exception {
+    public unmarkUnfinishedTaskException(String message) {
         super(message);
     }
 }

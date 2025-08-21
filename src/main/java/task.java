@@ -30,4 +30,8 @@ public class task {
             return "[ ] " + this.tasking;
         }
     }
+
+    public String getTaskDescription() {
+        return this.tasking;
+    }
 }

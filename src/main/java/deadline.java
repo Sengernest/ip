@@ -10,4 +10,9 @@ public class deadline extends task {
     public String getTasking() {
         return "[D]" + super.getTasking() + " (by: " + this.date + ")";
     }
+
+    @Override
+    public String getTaskDescription() {
+        return super.getTaskDescription() + " (by: " + this.date + ")";
+    }
 }

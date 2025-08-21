@@ -1,12 +1,15 @@
 Hello! I'm Sengernest
 What can I do for you?:
-unknownCommandException: Invalid command! Please input valid commands only.
+unknownCommandException: Invalid command! Please enter a valid command such as: list, todo, deadline, event, mark, unmark, delete, or bye.
 
 Enter next command:
-emptyTaskDescriptionException: Your list is empty! Create a toDo, deadline or event task first.
+emptyTaskListException: Your list is empty! Create a toDo, deadline or event task first.
 
 Enter next command:
-emptyTaskDescriptionException: Your list is empty! Create a toDo, deadline or event task first.
+emptyTaskListException: Your list is empty! Create a toDo, deadline or event task first.
+
+Enter next command:
+emptyTaskListException: Your list is empty! Create a toDo, deadline or event task first.
 
 Enter next command:
 emptyTaskDescriptionException: The description of a todo cannot be empty! Continue to input the description of the task.
@@ -54,9 +57,28 @@ Your List:
 3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
 
 Enter next command:
+missingTaskNumberException: Please specify the task number to mark.
+
+Enter next command:
+missingTaskNumberException: Please specify the task number to unmark.
+
+Enter next command:
+unknownCommandException: Invalid input! Please enter a task number after 'mark'.
+
+Enter next command:
+unknownCommandException: Invalid input! Please enter a task number after 'unmark'.
+
+Enter next command:
+invalidTaskNumberException: Invalid task number! Choose only existing task numbers in the list.
+
+Enter next command:
+invalidTaskNumberException: Invalid task number! Choose only existing task numbers in the list.
+
+Enter next command:
 unmarkUnfinishedTaskException: The task is already unmarked as not done!
 
-Enter next command:Your List:
+Enter next command:
+Your List:
 1. [T][X] read a book
 2. [D][ ] submit homework (by: Sunday)
 3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
@@ -64,30 +86,41 @@ Enter next command:Your List:
 Enter next command:
 markFinishedTaskException: The task is already marked as done!
 
-Enter next command:Your List:
+Enter next command:
+Your List:
 1. [T][X] read a book
 2. [D][X] submit homework (by: Sunday)
 3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
 
-Enter next command:Your List:
+Enter next command:
+Your List:
 1. [T][X] read a book
 2. [D][X] submit homework (by: Sunday)
 3. [E][X] gym session with friend (from: Mon 12pm to: 2pm)
 
-Enter next command:Your List:
+Enter next command:
+Your List:
 1. [T][ ] read a book
 2. [D][X] submit homework (by: Sunday)
 3. [E][X] gym session with friend (from: Mon 12pm to: 2pm)
 
-Enter next command:Your List:
+Enter next command:
+Your List:
 1. [T][ ] read a book
 2. [D][ ] submit homework (by: Sunday)
 3. [E][X] gym session with friend (from: Mon 12pm to: 2pm)
 
-Enter next command:Your List:
+Enter next command:
+Your List:
 1. [T][ ] read a book
 2. [D][ ] submit homework (by: Sunday)
 3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+
+Enter next command:
+unknownCommandException: Invalid input! Please enter a task number after 'delete'.
+
+Enter next command:
+invalidTaskNumberException: Invalid task number! Choose only existing task numbers in the list.
 
 Enter next command:
 Goodbye, hope to see you again soon!

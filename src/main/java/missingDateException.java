@@ -1,7 +1,5 @@
-package PACKAGE_NAME;
-
-public class missingDateException extends RuntimeException {
-  public missingDateException(String message) {
-    super(message);
-  }
+public class missingDateException extends Exception {
+    public missingDateException(String message) {
+        super(message);
+    }
 }

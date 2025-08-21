@@ -1,7 +1,5 @@
-package PACKAGE_NAME;
-
-public class emptyTaskListException extends RuntimeException {
-  public emptyTaskListException(String message) {
-    super(message);
-  }
+public class emptyTaskListException extends Exception {
+    public emptyTaskListException(String message) {
+        super(message);
+    }
 }

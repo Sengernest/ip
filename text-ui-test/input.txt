@@ -1,6 +1,7 @@
 blah
-mark 1
-unmark 1
+delete
+mark
+unmark
 todo
 todo read a book
 deadline
@@ -11,6 +12,12 @@ event gym session with friend
 event gym session with friend /from Mon 12pm
 event gym session with friend /from Mon 12pm /to 2pm
 list
+mark
+unmark
+mark task 1
+unmark task 1
+mark 0
+unmark 0
 unmark 1
 mark 1
 mark 1
@@ -19,4 +26,6 @@ mark 3
 unmark 1
 unmark 2
 unmark 3
+delete task 1
+delete 0
 bye
