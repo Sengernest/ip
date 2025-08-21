@@ -49,17 +49,42 @@ public class Sengernest {
                 list[Integer.parseInt(commands[1]) - 1].unfinish();
                 printList(count, list);
                 nextCommand();
-            } else {
-                String commandTask;
-                if (commands.length > 1) {
-                    commandTask = command + " " + commands[1];
-                } else {
-                    commandTask = command;
-                }
-                list[count] = new task(commandTask);
-                count += 1;
+            } else if (command.equals("todo")) {
+                list[count] = new toDo(commands[1]);
+                count ++;
                 System.out.println();
-                System.out.println("added to list: " + commandTask);
+                System.out.println("added to list: " + commands[1]);
+                nextCommand();
+            } else if (command.equals("deadline")) {
+                if (commands.length > 1) {
+                    String[] parts = commands[1].split("/by", 2);
+                    String description = parts[0].trim();
+                    String by = (parts.length > 1) ? parts[1].trim() : "";
+                    list[count] = new deadline(description, by);
+                    count++;
+                    System.out.println();
+                    System.out.println("added to list: " + description + " by " + by);
+                }
+                nextCommand();
+            }
+            else {
+                if (commands.length > 1) {
+                    String[] firstSplit = commands[1].split("/from", 2);
+                    String description = firstSplit[0].trim();
+                    String from = "";
+                    String to = "";
+                    if (firstSplit.length > 1) {
+                        String[] secondSplit = firstSplit[1].split("/to", 2);
+                        from = secondSplit[0].trim();
+                        if (secondSplit.length > 1) {
+                            to = secondSplit[1].trim();
+                        }
+                    }
+                    list[count] = new event(description, from, to);
+                    count++;
+                    System.out.println();
+                    System.out.println("added to list: " + description + " from " + from + " to " + to);
+                }
                 nextCommand();
             }
         }
