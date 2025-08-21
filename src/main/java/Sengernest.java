@@ -11,7 +11,7 @@ public class Sengernest {
 
     public static void nextCommand() {
         System.out.println();
-        System.out.print("Enter next command: ");
+        System.out.print("Enter next command:");
     }
 
     public static void main(String[] args) {
@@ -21,9 +21,9 @@ public class Sengernest {
         list[0] = new task("");
 
         System.out.println("Hello! I'm Sengernest");
-        System.out.print("What can I do for you?: ");
+        System.out.print("What can I do for you?:");
 
-        while(true) {
+        while (scanner.hasNextLine()) {
             String[] commands = scanner.nextLine().trim().split(" ", 2);
             String command = commands[0];
 
