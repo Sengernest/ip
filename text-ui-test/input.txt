@@ -1,7 +1,18 @@
+blah
+mark 1
+unmark 1
+todo
 todo read a book
+deadline
+deadline submit homework
 deadline submit homework /by Sunday
+event
+event gym session with friend
+event gym session with friend /from Mon 12pm
 event gym session with friend /from Mon 12pm /to 2pm
 list
+unmark 1
+mark 1
 mark 1
 mark 2
 mark 3

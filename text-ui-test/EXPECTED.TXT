@@ -1,12 +1,51 @@
 Hello! I'm Sengernest
 What can I do for you?:
+unknownCommandException: Invalid command! Please input valid commands only.
+
+Enter next command:
+emptyTaskDescriptionException: Your list is empty! Create a toDo, deadline or event task first.
+
+Enter next command:
+emptyTaskDescriptionException: Your list is empty! Create a toDo, deadline or event task first.
+
+Enter next command:
+emptyTaskDescriptionException: The description of a todo cannot be empty! Continue to input the description of the task.
+
+Enter next command:
 added to list: read a book
+
+Your List:
+1. [T][ ] read a book
+
+Enter next command:
+emptyTaskDescriptionException: The description of a deadline cannot be empty! Continue to input the description of the task.
+
+Enter next command:
+missingDateException: The deadline must have a /by date! Continue to input the completion date of the task.
 
 Enter next command:
 added to list: submit homework by Sunday
 
+Your List:
+1. [T][ ] read a book
+2. [D][ ] submit homework (by: Sunday)
+
+Enter next command:
+emptyTaskDescriptionException: The description of an event cannot be empty! Continue to input the description of the task.
+
+Enter next command:
+missingDateException: The event must have a /from start date! Continue to input the start date of the task.
+
+Enter next command:
+missingDateException: The event must have a /to end date! Continue to input the end date of the task.
+
 Enter next command:
 added to list: gym session with friend from Mon 12pm to 2pm
+
+Your List:
+1. [T][ ] read a book
+2. [D][ ] submit homework (by: Sunday)
+3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
 
 Enter next command:
 Your List:
@@ -14,10 +53,16 @@ Your List:
 2. [D][ ] submit homework (by: Sunday)
 3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
 
+Enter next command:
+unmarkUnfinishedTaskException: The task is already unmarked as not done!
+
 Enter next command:Your List:
 1. [T][X] read a book
 2. [D][ ] submit homework (by: Sunday)
 3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+
+Enter next command:
+markFinishedTaskException: The task is already marked as done!
 
 Enter next command:Your List:
 1. [T][X] read a book
