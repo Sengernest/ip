@@ -1,126 +1,139 @@
 Hello! I'm Sengernest
-What can I do for you?:
-unknownCommandException: Invalid command! Please enter a valid command such as: list, todo, deadline, event, mark, unmark, delete, or bye.
+What can I do for you?: 
+UnknownCommandException: Invalid command! Valid commands: list, todo, Deadline, Event, mark, unmark, delete, bye.
 
-Enter next command:
-emptyTaskListException: Your list is empty! Create a toDo, deadline or event task first.
+Enter next command: 
+EmptyTaskListException: Your list is empty!
 
-Enter next command:
-emptyTaskListException: Your list is empty! Create a toDo, deadline or event task first.
+Enter next command: 
+EmptyTaskListException: Your list is empty!
 
-Enter next command:
-emptyTaskListException: Your list is empty! Create a toDo, deadline or event task first.
+Enter next command: 
+EmptyTaskListException: Your list is empty!
 
-Enter next command:
-emptyTaskDescriptionException: The description of a todo cannot be empty! Continue to input the description of the task.
+Enter next command: 
+EmptyTaskDescriptionException: The description of a todo cannot be empty!
 
-Enter next command:
+Enter next command: 
 added to list: read a book
-
 Your List:
 1. [T][ ] read a book
 
-Enter next command:
-emptyTaskDescriptionException: The description of a deadline cannot be empty! Continue to input the description of the task.
+Enter next command: 
+EmptyTaskDescriptionException: The description of a Deadline cannot be empty!
 
-Enter next command:
-missingDateException: The deadline must have a /by date! Continue to input the completion date of the task.
+Enter next command: 
+MissingDateException: Deadline must have a /by date in format yyyy-MM-dd HHmm!
 
-Enter next command:
-added to list: submit homework by Sunday
-
+Enter next command: 
+added to list: submit homework by 2025-08-25 2359
 Your List:
 1. [T][ ] read a book
-2. [D][ ] submit homework (by: Sunday)
+2. [D][ ] submit homework (by: Aug 25 2025 2359)
 
-Enter next command:
-emptyTaskDescriptionException: The description of an event cannot be empty! Continue to input the description of the task.
+Enter next command: 
+EmptyTaskDescriptionException: The description of an Event cannot be empty!
 
-Enter next command:
-missingDateException: The event must have a /from start date! Continue to input the start date of the task.
+Enter next command: 
+MissingDateException: Event must have a /from start date!
 
-Enter next command:
-missingDateException: The event must have a /to end date! Continue to input the end date of the task.
+Enter next command: 
+MissingDateException: Event must have a /to end date!
 
-Enter next command:
-added to list: gym session with friend from Mon 12pm to 2pm
-
+Enter next command: 
+added to list: gym session with friend from 2025-08-25 1200 to 2025-08-25 1400
 Your List:
 1. [T][ ] read a book
-2. [D][ ] submit homework (by: Sunday)
-3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][ ] submit homework (by: Aug 25 2025 2359)
+3. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][ ] read a book
-2. [D][ ] submit homework (by: Sunday)
-3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][ ] submit homework (by: Aug 25 2025 2359)
+3. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
-missingTaskNumberException: Please specify the task number to mark.
+Enter next command: 
+MissingTaskNumberException: Please specify the Task number to mark.
 
-Enter next command:
-missingTaskNumberException: Please specify the task number to unmark.
+Enter next command: 
+MissingTaskNumberException: Please specify the Task number to unmark.
 
-Enter next command:
-unknownCommandException: Invalid input! Please enter a task number after 'mark'.
+Enter next command: Enter a valid number after 'mark'.
 
-Enter next command:
-unknownCommandException: Invalid input! Please enter a task number after 'unmark'.
+Enter next command: Enter a valid number after 'unmark'.
 
-Enter next command:
-invalidTaskNumberException: Invalid task number! Choose only existing task numbers in the list.
+Enter next command: 
+InvalidTaskNumberException: Invalid Task number! Only choose valid Task numbers in the list.
 
-Enter next command:
-invalidTaskNumberException: Invalid task number! Choose only existing task numbers in the list.
+Enter next command: 
+InvalidTaskNumberException: Invalid Task number! Only choose valid Task numbers in the list.
 
-Enter next command:
-unmarkUnfinishedTaskException: The task is already unmarked as not done!
+Enter next command: 
+UnmarkUnfinishedTaskException: Task already unmarked!
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][X] read a book
-2. [D][ ] submit homework (by: Sunday)
-3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][ ] submit homework (by: Aug 25 2025 2359)
+3. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
-markFinishedTaskException: The task is already marked as done!
+Enter next command: 
+MarkFinishedTaskException: Task already marked!
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][X] read a book
-2. [D][X] submit homework (by: Sunday)
-3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][X] submit homework (by: Aug 25 2025 2359)
+3. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][X] read a book
-2. [D][X] submit homework (by: Sunday)
-3. [E][X] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][X] submit homework (by: Aug 25 2025 2359)
+3. [E][X] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][ ] read a book
-2. [D][X] submit homework (by: Sunday)
-3. [E][X] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][X] submit homework (by: Aug 25 2025 2359)
+3. [E][X] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][ ] read a book
-2. [D][ ] submit homework (by: Sunday)
-3. [E][X] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][ ] submit homework (by: Aug 25 2025 2359)
+3. [E][X] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
+Enter next command: 
 Your List:
 1. [T][ ] read a book
-2. [D][ ] submit homework (by: Sunday)
-3. [E][ ] gym session with friend (from: Mon 12pm to: 2pm)
+2. [D][ ] submit homework (by: Aug 25 2025 2359)
+3. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
 
-Enter next command:
-unknownCommandException: Invalid input! Please enter a task number after 'delete'.
+Enter next command: Enter a valid number after 'delete'.
 
-Enter next command:
-invalidTaskNumberException: Invalid task number! Choose only existing task numbers in the list.
+Enter next command: 
+InvalidTaskNumberException: Invalid Task number! Only choose valid Task numbers in the list.
 
-Enter next command:
+Enter next command: 
+deleted from list: read a book
+
+Your List:
+1. [D][ ] submit homework (by: Aug 25 2025 2359)
+2. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
+
+Enter next command: 
+deleted from list: submit homework (by: Aug 25 2025 2359)
+
+Your List:
+1. [E][ ] gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
+
+Enter next command: 
+deleted from list: gym session with friend (from: Aug 25 2025 1200 to: Aug 25 2025 1400)
+
+Your List:
+Nothing added yet!
+
+Enter next command: 
 Goodbye, hope to see you again soon!

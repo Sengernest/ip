@@ -1,17 +1,21 @@
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Storage {
     private final Path path;
+    private static final DateTimeFormatter DEADLINE_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter EVENT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     public Storage(String relativePath) {
         this.path = Path.of(relativePath);
     }
 
-    public List<task> load() throws IOException {
+    public List<Task> load() throws IOException {
         ensureFileReady();
-        List<task> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
 
         try (BufferedReader br = Files.newBufferedReader(path)) {
             String line;
@@ -28,10 +32,10 @@ public class Storage {
         return tasks;
     }
 
-    public void save(List<task> tasks) throws IOException {
+    public void save(List<Task> tasks) throws IOException {
         ensureDirReady();
         try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            for (task t : tasks) {
+            for (Task t : tasks) {
                 bw.write(t.toFileFormat());
                 bw.newLine();
             }
@@ -48,41 +52,44 @@ public class Storage {
     private void ensureFileReady() throws IOException {
         ensureDirReady();
         if (!Files.exists(path)) {
-            Files.createFile(path); 
+            Files.createFile(path);
         }
     }
 
-   private task parseLine(String line) {
-    String[] parts = line.split(" \\| ");
-    if (parts.length < 3) throw new IllegalArgumentException("Too few fields");
+    private Task parseLine(String line) {
+        String[] parts = line.split(" \\| ");
+        if (parts.length < 3) throw new IllegalArgumentException("Too few fields");
 
-    String type = parts[0].trim();
-    boolean done = parts[1].trim().equals("1");
-    String desc = parts[2].trim();
+        String type = parts[0].trim();
+        boolean done = parts[1].trim().equals("1");
+        String desc = parts[2].trim();
 
-    task t;
+        Task t;
 
-    switch (type) {
-        case "T":
-            t = new toDo(desc);
-            break;
-        case "D":
-            if (parts.length < 4) throw new IllegalArgumentException("Missing deadline time");
-            t = new deadline(desc, parts[3].trim());
-            break;
-        case "E":
-            if (parts.length < 5) throw new IllegalArgumentException("Missing event time");
-            t = new event(desc, parts[3].trim(), parts[4].trim());
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown task type: " + type);
+        switch (type) {
+            case "T":
+                t = new ToDo(desc);
+                break;
+
+            case "D":
+                if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
+                LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
+                t = new Deadline(desc, deadlineDate);
+                break;
+
+            case "E":
+                if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
+                LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
+                LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
+                t = new Event(desc, start, end);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown task type: " + type);
+        }
+
+        if (done) t.finish();
+
+        return t;
     }
-
-    if (done) {
-        t.finish();
-    }
-    
-    return t;
-}
-
 }
