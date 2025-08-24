@@ -16,4 +16,9 @@ public class event extends task {
     public String getTaskDescription() {
         return super.getTaskDescription() + " (from: " + this.startDate + " to: " + this.endDate + ")";
     }
+
+    @Override
+    public String toFileFormat() {
+        return "D " + super.toFileFormat() + " | " + this.startDate + " to " + endDate +  " |"; 
+    }
 }

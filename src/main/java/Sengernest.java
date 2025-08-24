@@ -1,7 +1,12 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sengernest {
+
+private static final String FILE_PATH = "data/Sengernest.txt";
+private static Storage storage = new Storage(FILE_PATH);
+private static ArrayList<task> list = new ArrayList<>();
 
     public static void printList(int size, ArrayList<task> list) {
         System.out.println("Your List:");
@@ -19,8 +24,16 @@ public class Sengernest {
     }
 
     public static void main(String[] args) {
+
+        try {
+            list = new ArrayList<>(storage.load());
+        } catch (IOException e) {
+            System.out.println("[warn] Could not load tasks, starting empty. Reason: " + e.getMessage());
+            list = new ArrayList<>();
+        }
+
+
         Scanner scanner = new Scanner(System.in);
-        ArrayList<task> list = new ArrayList<>();
 
         System.out.println("Hello! I'm Sengernest");
         System.out.print("What can I do for you?:");
@@ -64,6 +77,8 @@ public class Sengernest {
                             if (index < 0 || index >= list.size()) throw new invalidTaskNumberException("Invalid task number! Choose only existing task numbers in the list.");
                             if (list.get(index).isFinished()) throw new markFinishedTaskException("The task is already marked as done!");
                             list.get(index).finish();
+                            try { storage.save(list); } catch (IOException e) { System.out.println("[save error] " + e.getMessage()); }
+
                             System.out.println();
                             printList(list.size(), list);
                         } catch (Exception e) {
@@ -87,6 +102,8 @@ public class Sengernest {
                             if (index < 0 || index >= list.size()) throw new invalidTaskNumberException("Invalid task number! Choose only existing task numbers in the list.");
                             if (!list.get(index).isFinished()) throw new unmarkUnfinishedTaskException("The task is already unmarked as not done!");
                             list.get(index).unfinish();
+                            try { storage.save(list); } catch (IOException e) { System.out.println("[save error] " + e.getMessage()); }
+
                             System.out.println();
                             printList(list.size(), list);
                         } catch (Exception e) {
@@ -99,6 +116,7 @@ public class Sengernest {
                         if (commands.length < 2 || commands[1].trim().isEmpty())
                             throw new emptyTaskDescriptionException("The description of a todo cannot be empty! Continue to input the description of the task.");
                         list.add(new toDo(commands[1].trim()));
+                        try { storage.save(list); } catch (IOException e) { System.out.println("[save error] " + e.getMessage()); }
                         System.out.println();
                         System.out.println("added to list: " + commands[1].trim());
                         System.out.println();
@@ -115,6 +133,7 @@ public class Sengernest {
                         }
                         String by = parts[1].trim();
                         list.add(new deadline(desc, by));
+                        try { storage.save(list); } catch (IOException e) { System.out.println("[save error] " + e.getMessage()); }
                         System.out.println();
                         System.out.println("added to list: " + desc + " by " + by);
                         System.out.println();
@@ -139,6 +158,7 @@ public class Sengernest {
                         String from = secondSplit[0].trim();
                         String to = secondSplit[1].trim();
                         list.add(new event(eventDesc, from, to));
+                        try { storage.save(list); } catch (IOException e) { System.out.println("[save error] " + e.getMessage()); }
                         System.out.println();
                         System.out.println("added to list: " + eventDesc + " from " + from + " to " + to);
                         System.out.println();
@@ -160,6 +180,7 @@ public class Sengernest {
                             System.out.println();
                             System.out.println("deleted from list: " + list.get(index).getTaskDescription());
                             list.remove(index);
+                            try { storage.save(list); } catch (IOException e) { System.out.println("[save error] " + e.getMessage()); }
                             System.out.println();
                             printList(list.size(), list);
                         } catch (Exception e) {

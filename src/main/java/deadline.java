@@ -15,4 +15,9 @@ public class deadline extends task {
     public String getTaskDescription() {
         return super.getTaskDescription() + " (by: " + this.date + ")";
     }
+
+    @Override
+    public String toFileFormat() {
+        return "D " + super.toFileFormat() + " | " + this.date; 
+    }
 }
