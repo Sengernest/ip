@@ -12,10 +12,10 @@ public class Storage {
     public Storage(String relativePath) {
         this.path = Path.of(relativePath);
     }
-
-    public List<Task> load() throws IOException {
+    
+    public ArrayList<Task> load() throws IOException {
         ensureFileReady();
-        List<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         try (BufferedReader br = Files.newBufferedReader(path)) {
             String line;
@@ -31,11 +31,11 @@ public class Storage {
         }
         return tasks;
     }
-
-    public void save(List<Task> tasks) throws IOException {
+    
+    public void save(TaskList tasks) throws IOException {
         ensureDirReady();
         try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            for (Task t : tasks) {
+            for (Task t : tasks.getTasks()) {  
                 bw.write(t.toFileFormat());
                 bw.newLine();
             }
@@ -65,31 +65,27 @@ public class Storage {
         String desc = parts[2].trim();
 
         Task t;
-
         switch (type) {
             case "T":
                 t = new ToDo(desc);
                 break;
-
             case "D":
                 if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
                 LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
                 t = new Deadline(desc, deadlineDate);
                 break;
-
             case "E":
                 if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
                 LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
                 LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
                 t = new Event(desc, start, end);
                 break;
-
             default:
                 throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
         if (done) t.finish();
-
+        
         return t;
     }
 }
