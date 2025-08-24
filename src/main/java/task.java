@@ -34,4 +34,13 @@ public class task {
     public String getTaskDescription() {
         return this.tasking;
     }
+
+    public String toFileFormat() {
+        if (this.isFinished()) {
+            return "| 1 | " + this.getTaskDescription(); 
+        } else {
+            return "| 0 | " + this.getTaskDescription() ; 
+        }
+    }
 }
+

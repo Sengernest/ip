@@ -8,4 +8,9 @@ public class toDo extends task {
     public String getTasking() {
         return "[T]" + super.getTasking();
     }
+
+    @Override
+    public String toFileFormat() {
+        return "T " + super.toFileFormat();
+    }
 }
