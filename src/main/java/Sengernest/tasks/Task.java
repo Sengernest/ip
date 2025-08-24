@@ -1,3 +1,4 @@
+package Sengernest.tasks;
 public class Task {
     private final String tasking;
     private boolean finished;

@@ -7,7 +7,7 @@ REM delete output from previous run
 if exist ACTUAL.TXT del ACTUAL.TXT
 
 REM delete previous Task storage for testing
-if exist data\Sengernest.txt del data\Sengernest.txt
+if exist Sengernest.data\Sengernest.txt del Sengernest.data\Sengernest.txt
 
 REM compile the code into the bin folder
 javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\*.java

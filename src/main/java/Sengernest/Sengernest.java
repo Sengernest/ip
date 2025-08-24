@@ -1,4 +1,11 @@
+package Sengernest;
 import java.util.ArrayList;
+
+import Sengernest.commands.Command;
+import Sengernest.parser.Parser;
+import Sengernest.storage.Storage;
+import Sengernest.tasks.TaskList;
+import Sengernest.ui.Ui;
 
 public class Sengernest {
     private static final String FILE_PATH = "data/Sengernest.txt";
