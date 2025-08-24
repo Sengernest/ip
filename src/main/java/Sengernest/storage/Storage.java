@@ -1,8 +1,15 @@
+package Sengernest.storage;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import Sengernest.tasks.Deadline;
+import Sengernest.tasks.Event;
+import Sengernest.tasks.Task;
+import Sengernest.tasks.TaskList;
+import Sengernest.tasks.ToDo;
 
 public class Storage {
     private final Path path;

@@ -1,3 +1,9 @@
+package Sengernest.commands;
+import Sengernest.storage.Storage;
+import Sengernest.tasks.Task;
+import Sengernest.tasks.TaskList;
+import Sengernest.ui.Ui;
+
 public class AddTaskCommand extends Command {
     private final Task task;
 
@@ -6,7 +12,7 @@ public class AddTaskCommand extends Command {
     }
 
     @Override
-    protected void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(task);
         try {
             storage.save(tasks);
