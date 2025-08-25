@@ -1,0 +1,54 @@
+package sengernest;
+import java.util.ArrayList;
+
+import sengernest.commands.Command;
+import sengernest.parser.Parser;
+import sengernest.storage.Storage;
+import sengernest.tasks.TaskList;
+import sengernest.ui.Ui;
+
+public class Sengernest {
+    private static final String FILE_PATH = "data/Sengernest.txt";
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
+
+    public Sengernest() {
+        ui = new Ui();
+        storage = new Storage(FILE_PATH);
+        TaskList loadedTasks;
+        try {
+            loadedTasks = new TaskList(new ArrayList<>(storage.load()));
+        } catch (Exception e) {
+            ui.displayError("[warn] Could not load tasks. Starting empty. Reason: " + e.getMessage());
+            loadedTasks = new TaskList();
+        }
+        tasks = loadedTasks;
+    }
+
+    public void run() {
+        ui.greet(); 
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.newCommand();
+                ui.newLine();
+                Command command = Parser.parse(fullCommand);
+                if (command == null ) {
+                    continue;
+                }
+                command.execute(tasks, ui, storage);
+                isExit = command.isExit();
+            } catch (Exception e) {
+                ui.displayError(e.getMessage());
+            } finally {
+                ui.newLine();
+            }
+        }
+        ui.close();
+    }
+    
+    public static void main(String[] args) {
+        new Sengernest().run();
+    }
+}
