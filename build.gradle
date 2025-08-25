@@ -32,8 +32,13 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "Sengernest"
     archiveClassifier = null
+    manifest {
+        attributes(
+                'Main-Class': 'sengernest.Sengernest' // replace with your actual main class path
+        )
+    }
 }
 
 run{
