@@ -7,7 +7,7 @@ REM delete output from previous run
 if exist ACTUAL.TXT del ACTUAL.TXT
 
 REM delete previous Task storage for testing
-if exist Sengernest.data\Sengernest.txt del Sengernest.data\Sengernest.txt
+if exist sengernest.data\sengernest.txt del sengernest.data\sengernest.txt
 
 REM compile the code into the bin folder
 javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\*.java
@@ -17,7 +17,7 @@ IF ERRORLEVEL 1 (
 )
 
 REM run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ..\bin Sengernest < input.txt > ACTUAL.TXT
+java -classpath ..\bin sengernest < input.txt > ACTUAL.TXT
 
 REM compare the output to the expected output
 FC ACTUAL.TXT EXPECTED.TXT

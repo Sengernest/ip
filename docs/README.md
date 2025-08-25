@@ -1,4 +1,4 @@
-# Sengernest User Guide
+# sengernest User Guide
 
 // Update the title above to match the actual product name
 
