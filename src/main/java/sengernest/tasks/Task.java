@@ -1,4 +1,5 @@
 package sengernest.tasks;
+
 public class Task {
     private final String tasking;
     private boolean finished;
@@ -38,9 +39,9 @@ public class Task {
 
     public String toFileFormat() {
         if (this.isFinished()) {
-            return "| 1 | " + this.getTaskDescription(); 
+            return "| 1 | " + this.getTaskDescription();
         } else {
-            return "| 0 | " + this.getTaskDescription() ; 
+            return "| 0 | " + this.getTaskDescription();
         }
     }
 }

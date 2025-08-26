@@ -1,4 +1,5 @@
 package sengernest.commands;
+
 import sengernest.exceptions.EmptyTaskListException;
 import sengernest.exceptions.InvalidTaskNumberException;
 import sengernest.exceptions.MarkFinishedTaskException;
@@ -16,11 +17,11 @@ public class MarkCommand extends Command {
             throw new IllegalArgumentException("Enter a valid number after 'mark'.");
         }
     }
-    
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
-            if (tasks.size() == 0) { 
+            if (tasks.size() == 0) {
                 throw new EmptyTaskListException("Your list is empty! Add tasks first!");
             } else if (index < 0 || index >= tasks.size()) {
                 throw new InvalidTaskNumberException("Invalid task number! Only choose valid task numbers in the list.");
@@ -33,7 +34,7 @@ public class MarkCommand extends Command {
                 ui.printList(tasks);
             }
         } catch (Exception e) {
-            System.out.println(e); 
+            System.out.println(e);
         }
     }
 }

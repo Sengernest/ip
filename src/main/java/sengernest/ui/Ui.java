@@ -1,11 +1,12 @@
 package sengernest.ui;
+
 import java.util.Scanner;
 
 import sengernest.tasks.TaskList;
 
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
-    private boolean firstCommand = true; 
+    private boolean firstCommand = true;
 
     public void greet() {
         System.out.println("Hello! I'm Sengernest");

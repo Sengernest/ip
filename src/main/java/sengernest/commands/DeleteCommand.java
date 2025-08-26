@@ -1,4 +1,5 @@
 package sengernest.commands;
+
 import sengernest.exceptions.EmptyTaskListException;
 import sengernest.exceptions.InvalidTaskNumberException;
 import sengernest.storage.Storage;
@@ -20,7 +21,7 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
-            if (tasks.size() == 0) { 
+            if (tasks.size() == 0) {
                 throw new EmptyTaskListException("Your list is empty! Add tasks first!");
             } else if (index < 0 || index >= tasks.size()) {
                 throw new InvalidTaskNumberException("Invalid task number! Only choose valid task numbers in the list.");

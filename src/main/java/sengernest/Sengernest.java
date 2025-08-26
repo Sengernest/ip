@@ -1,4 +1,5 @@
 package sengernest;
+
 import java.util.ArrayList;
 
 import sengernest.commands.Command;
@@ -27,14 +28,14 @@ public class Sengernest {
     }
 
     public void run() {
-        ui.greet(); 
+        ui.greet();
         boolean isExit = false;
         while (!isExit) {
             try {
                 String fullCommand = ui.newCommand();
                 ui.newLine();
                 Command command = Parser.parse(fullCommand);
-                if (command == null ) {
+                if (command == null) {
                     continue;
                 }
                 command.execute(tasks, ui, storage);
@@ -47,7 +48,7 @@ public class Sengernest {
         }
         ui.close();
     }
-    
+
     public static void main(String[] args) {
         new Sengernest().run();
     }

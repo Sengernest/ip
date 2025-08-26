@@ -1,4 +1,5 @@
 package sengernest.storage;
+
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
@@ -38,11 +39,11 @@ public class Storage {
         }
         return tasks;
     }
-    
+
     public void save(TaskList tasks) throws IOException {
         ensureDirReady();
         try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            for (Task t : tasks.getTasks()) {  
+            for (Task t : tasks.getTasks()) {
                 bw.write(t.toFileFormat());
                 bw.newLine();
             }
@@ -73,26 +74,26 @@ public class Storage {
 
         Task t;
         switch (type) {
-            case "T":
-                t = new ToDo(desc);
-                break;
-            case "D":
-                if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
-                LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
-                t = new Deadline(desc, deadlineDate);
-                break;
-            case "E":
-                if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
-                LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
-                LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
-                t = new Event(desc, start, end);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + type);
+        case "T":
+            t = new ToDo(desc);
+            break;
+        case "D":
+            if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
+            LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
+            t = new Deadline(desc, deadlineDate);
+            break;
+        case "E":
+            if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
+            LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
+            LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
+            t = new Event(desc, start, end);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
         if (done) t.finish();
-        
+
         return t;
     }
 }
