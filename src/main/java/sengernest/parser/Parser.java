@@ -94,7 +94,14 @@ public class Parser {
             case "delete":
                 if (parts.length < 2) throw new MissingTaskNumberException("Specify task number to delete!");
                 return new DeleteCommand(parts[1].trim());
-
+                
+            case "find":
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    throw new EmptyTaskDescriptionException("The find command requires a keyword to search!");
+                }
+                String keyword = parts[1].trim();
+                return new sengernest.commands.FindCommand(keyword);
+                
             default:
                 throw new UnknownCommandException("Invalid command! Use valid commands: list, todo, deadline, event, mark, unmark, delete, bye");
             }
