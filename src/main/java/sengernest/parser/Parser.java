@@ -1,4 +1,5 @@
 package sengernest.parser;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -19,9 +20,19 @@ import sengernest.tasks.Deadline;
 import sengernest.tasks.Event;
 import sengernest.tasks.ToDo;
 
+/**
+ * Parses user input strings into commands for Sengernest.
+ */
 public class Parser {
+    /** Date format expected for deadlines and events. */
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
+    /**
+     * Parses a full command string from the user into a {@link Command} object.
+     *
+     * @param fullCommand The complete input string from the user.
+     * @return A Command object corresponding to the user input, or null if parsing fails.
+     */
     public static Command parse(String fullCommand) {
         try {
             String[] parts = fullCommand.split(" ", 2);
