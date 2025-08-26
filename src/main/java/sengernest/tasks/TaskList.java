@@ -1,4 +1,5 @@
 package sengernest.tasks;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -29,7 +30,7 @@ public class TaskList {
             return false;
         }
         this.getTask(index).finish();
-        return true; 
+        return true;
     }
 
     public boolean unmarkTask(int index) {
@@ -43,7 +44,11 @@ public class TaskList {
     public int size() {
         return tasks.size();
     }
-    
+
+    public boolean isEmpty() {
+        return this.size() == 0;
+    }
+
     public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks);
     }
