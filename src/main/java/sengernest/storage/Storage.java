@@ -58,7 +58,7 @@ public class Storage {
         }
         return tasks;
     }
-
+    
     /**
      * Saves the given task list to the storage file.
      *
@@ -116,22 +116,22 @@ public class Storage {
 
         Task t;
         switch (type) {
-            case "T":
-                t = new ToDo(desc);
-                break;
-            case "D":
-                if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
-                LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
-                t = new Deadline(desc, deadlineDate);
-                break;
-            case "E":
-                if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
-                LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
-                LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
-                t = new Event(desc, start, end);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + type);
+        case "T":
+            t = new ToDo(desc);
+            break;
+        case "D":
+            if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
+            LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
+            t = new Deadline(desc, deadlineDate);
+            break;
+        case "E":
+            if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
+            LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
+            LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
+            t = new Event(desc, start, end);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
         if (done) t.finish();

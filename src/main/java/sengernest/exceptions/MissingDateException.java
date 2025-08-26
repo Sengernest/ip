@@ -1,8 +1,5 @@
 package sengernest.exceptions;
 
-/**
- * Exception thrown when a task that requires a date is missing one.
- */
 public class MissingDateException extends Exception {
 
     /**

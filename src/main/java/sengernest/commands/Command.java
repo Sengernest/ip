@@ -8,7 +8,7 @@ import sengernest.ui.Ui;
  * Represents an abstract command in Sengernest.
  */
 public abstract class Command {
-
+    
     /**
      * Executes the command.
      *

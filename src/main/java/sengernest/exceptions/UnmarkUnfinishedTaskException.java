@@ -1,8 +1,5 @@
 package sengernest.exceptions;
 
-/**
- * Exception thrown when attempting to unmark a task that is already unfinished.
- */
 public class UnmarkUnfinishedTaskException extends Exception {
 
     /**

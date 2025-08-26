@@ -27,7 +27,7 @@ public class MarkCommand extends Command {
             throw new IllegalArgumentException("Enter a valid number after 'mark'.");
         }
     }
-
+    
     /**
      * Executes the mark command.
      *

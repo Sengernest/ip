@@ -1,8 +1,5 @@
 package sengernest.exceptions;
 
-/**
- * Exception thrown when attempting to mark a task that is already finished.
- */
 public class MarkFinishedTaskException extends Exception {
 
     /**
