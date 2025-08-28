@@ -1,5 +1,8 @@
 package sengernest.exceptions;
 
+/**
+ * Exception thrown when a task number is not entered.
+ */
 public class MissingTaskNumberException extends Exception {
 
     /**

@@ -1,10 +1,13 @@
 package sengernest.storage;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
 
 import sengernest.tasks.Deadline;
 import sengernest.tasks.Event;
@@ -16,14 +19,14 @@ import sengernest.tasks.ToDo;
  * Handles reading from and writing to the file system for task storage.
  */
 public class Storage {
-    /** File path for storing tasks. */
-    private final Path path;
-
     /** Date format used for deadlines in the storage file. */
     private static final DateTimeFormatter DEADLINE_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /** Date format used for events in the storage file. */
     private static final DateTimeFormatter EVENT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    /** File path for storing tasks. */
+    private final Path path;
 
     /**
      * Constructs a Storage object for a given file path.
@@ -48,7 +51,9 @@ public class Storage {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()) continue;
+                if (line.isEmpty()) {
+                    continue;
+                }
                 try {
                     tasks.add(parseLine(line));
                 } catch (IllegalArgumentException ex) {
@@ -108,7 +113,9 @@ public class Storage {
      */
     private Task parseLine(String line) {
         String[] parts = line.split(" \\| ");
-        if (parts.length < 3) throw new IllegalArgumentException("Too few fields");
+        if (parts.length < 3) {
+            throw new IllegalArgumentException("Too few fields");
+        }
 
         String type = parts[0].trim();
         boolean done = parts[1].trim().equals("1");
@@ -120,12 +127,16 @@ public class Storage {
             t = new ToDo(desc);
             break;
         case "D":
-            if (parts.length < 4) throw new IllegalArgumentException("Missing deadline date/time");
+            if (parts.length < 4) {
+                throw new IllegalArgumentException("Missing deadline date/time");
+            }
             LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
             t = new Deadline(desc, deadlineDate);
             break;
         case "E":
-            if (parts.length < 5) throw new IllegalArgumentException("Missing event start/end date/time");
+            if (parts.length < 5) {
+                throw new IllegalArgumentException("Missing event start/end date/time");
+            }
             LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
             LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
             t = new Event(desc, start, end);
@@ -134,7 +145,9 @@ public class Storage {
             throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
-        if (done) t.finish();
+        if (done) {
+            t.finish();
+        }
 
         return t;
     }

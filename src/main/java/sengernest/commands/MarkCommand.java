@@ -41,7 +41,8 @@ public class MarkCommand extends Command {
             if (tasks.size() == 0) {
                 throw new EmptyTaskListException("Your list is empty! Add tasks first!");
             } else if (index < 0 || index >= tasks.size()) {
-                throw new InvalidTaskNumberException("Invalid task number! Only choose valid task numbers in the list.");
+                throw new InvalidTaskNumberException("Invalid task number! "
+                        + "Only choose valid task numbers in the list.");
             } else if (!tasks.markTask(index)) {
                 throw new MarkFinishedTaskException("Task already marked!");
             } else {

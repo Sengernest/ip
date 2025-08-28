@@ -1,5 +1,8 @@
 package sengernest.exceptions;
 
+/**
+ * Exception thrown when a task list is empty.
+ */
 public class EmptyTaskListException extends Exception {
 
     /**

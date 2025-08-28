@@ -1,8 +1,10 @@
 package sengernest.tasks;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class ToDoTest {
     @Test
@@ -10,7 +12,8 @@ public class ToDoTest {
         ToDo todo = new ToDo("Read a book");
         assertFalse(todo.isFinished(), "New ToDo should not be finished");
         assertEquals("[T][ ] Read a book", todo.getTasking(), "Initial display should have [T] and unchecked box");
-        assertEquals("T | 0 | Read a book", todo.toFileFormat(), "File format should start with T and 0 for unfinished");
+        assertEquals("T | 0 | Read a book", todo.toFileFormat(),
+                "File format should start with T and 0 for unfinished");
     }
 
     @Test

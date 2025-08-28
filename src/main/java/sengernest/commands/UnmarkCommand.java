@@ -41,7 +41,8 @@ public class UnmarkCommand extends Command {
             if (tasks.size() == 0) {
                 throw new EmptyTaskListException("Your list is empty! Add tasks first!");
             } else if (index < 0 || index >= tasks.size()) {
-                throw new InvalidTaskNumberException("Invalid task number! Only choose valid task numbers in the list.");
+                throw new InvalidTaskNumberException("Invalid task number! "
+                        + "Only choose valid task numbers in the list.");
             } else if (!tasks.unmarkTask(index)) {
                 throw new UnmarkUnfinishedTaskException("Task already unmarked!");
             } else {

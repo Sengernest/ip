@@ -1,5 +1,8 @@
 package sengernest.exceptions;
 
+/**
+ * Exception thrown when the format of a date entered is invalid.
+ */
 public class InvalidDateFormatException extends Exception {
 
     /**
