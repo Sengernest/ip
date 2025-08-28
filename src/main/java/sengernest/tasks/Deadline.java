@@ -7,11 +7,11 @@ import java.time.format.DateTimeFormatter;
  * Represents a Deadline task with a specific due date and time.
  */
 public class Deadline extends Task {
-    /** The date and time by which the task should be completed. */
-    private final LocalDateTime by;
-
     /** Formatter used for displaying the deadline to the user. */
     private static final DateTimeFormatter DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
+
+    /** The date and time by which the task should be completed. */
+    private final LocalDateTime by;
 
     /**
      * Constructs a Deadline task with the given description and due date.
@@ -51,7 +51,9 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileFormat() {
-        DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        return "D | " + (isFinished() ? "1" : "0") + " | " + super.getTaskDescription() + " | " + by.format(FILE_FORMAT);
+        DateTimeFormatter fileFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return "D | " + (isFinished() ? "1" : "0") + " | "
+                + super.getTaskDescription()
+                + " | " + by.format(fileFormat);
     }
 }

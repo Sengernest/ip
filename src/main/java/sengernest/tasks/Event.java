@@ -7,14 +7,14 @@ import java.time.format.DateTimeFormatter;
  * Represents an Event task with a start and end time.
  */
 public class Event extends Task {
+    /** Formatter used for displaying date and time to the user. */
+    private static final DateTimeFormatter DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
+
     /** The start time of the event. */
     private final LocalDateTime start;
 
     /** The end time of the event. */
     private final LocalDateTime end;
-
-    /** Formatter used for displaying date and time to the user. */
-    private static final DateTimeFormatter DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
 
     /**
      * Constructs an Event task with the given description, start, and end times.
@@ -56,8 +56,8 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        DateTimeFormatter fileFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return "E | " + (isFinished() ? "1" : "0") + " | " + super.getTaskDescription() + " | "
-                + start.format(FILE_FORMAT) + " | " + end.format(FILE_FORMAT);
+                + start.format(fileFormat) + " | " + end.format(fileFormat);
     }
 }

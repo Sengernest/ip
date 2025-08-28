@@ -1,5 +1,8 @@
 package sengernest.exceptions;
 
+/**
+ * Exception thrown when an unknown command is entered.
+ */
 public class UnknownCommandException extends Exception {
 
     /**

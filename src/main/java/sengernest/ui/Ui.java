@@ -61,7 +61,9 @@ public class Ui {
      */
     public void printList(TaskList tasks) {
         System.out.println("Your List:");
-        if (tasks.size() == 0) System.out.println("Nothing added yet!");
+        if (tasks.size() == 0) {
+            System.out.println("Nothing added yet!");
+        }
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.getTask(i).getTasking());
         }

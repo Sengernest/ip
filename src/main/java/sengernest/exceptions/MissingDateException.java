@@ -1,5 +1,8 @@
 package sengernest.exceptions;
 
+/**
+ * Exception thrown when the date field of a deadline or event is empty.
+ */
 public class MissingDateException extends Exception {
 
     /**
