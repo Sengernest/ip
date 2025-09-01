@@ -1,85 +1,72 @@
 package sengernest.ui;
 
-import java.util.Scanner;
-
 import sengernest.tasks.TaskList;
 
 /**
  * Handles user interaction for Sengernest.
  */
 public class Ui {
-    /** Scanner for reading user input from the console. */
-    private final Scanner scanner = new Scanner(System.in);
 
-    /** Tracks whether this is the first command entered by the user. */
-    private boolean firstCommand = true;
+    /** Stores the last message for GUI display */
+    private String lastMessage = "";
+
+    /**
+     * Sets the last message.
+     *
+     * @param message The message to store.
+     */
+    private void setLastMessage(String message) {
+        lastMessage = message;
+    }
+
+    /**
+     * Returns the last message stored.
+     *
+     * @return Last message string.
+     */
+    public String getLastMessage() {
+        return lastMessage;
+    }
 
     /**
      * Greets the user with a welcome message.
      */
     public void greet() {
-        System.out.println("Hello! I'm Sengernest");
+        setLastMessage("Hello! I'm Sengernest");
     }
 
     /**
-     * Displays a message to the user.
+     * Displays a message.
      *
-     * @param message The message to display.
+     * @param message Message string.
      */
     public void displayMessage(String message) {
-        System.out.println(message);
+        setLastMessage(message);
     }
 
     /**
-     * Displays an error message to the user.
+     * Displays an error message.
      *
-     * @param message The error message to display.
+     * @param message Error message string.
      */
     public void displayError(String message) {
-        System.out.println(message);
+        setLastMessage("[Error] " + message);
     }
 
     /**
-     * Reads a new command from the user.
+     * Prints the current task list.
      *
-     * @return The command string entered by the user.
-     */
-    public String newCommand() {
-        if (firstCommand) {
-            System.out.print("What can I do for you?: ");
-            firstCommand = false;
-        } else {
-            System.out.print("Enter next command: ");
-        }
-        return scanner.nextLine().trim();
-    }
-
-    /**
-     * Prints the current task list to the console.
-     *
-     * @param tasks The task list to print.
+     * @param tasks Task list.
      */
     public void printList(TaskList tasks) {
-        System.out.println("Your List:");
         if (tasks.size() == 0) {
-            System.out.println("Nothing added yet!");
+            setLastMessage("Your List is empty!");
+        } else {
+            StringBuilder sb = new StringBuilder("Your List:\n");
+            for (int i = 0; i < tasks.size(); i++) {
+                sb.append((i + 1)).append(". ").append(tasks.getTask(i).getTasking()).append("\n");
+            }
+            setLastMessage(sb.toString().trim());
         }
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.getTask(i).getTasking());
-        }
-    }
-
-    /**
-     * Closes the scanner used for reading user input.
-     */
-    public void close() {
-        scanner.close();
-    }
-
-    /**
-     * Prints a new line to the console.
-     */
-    public void newLine() {
-        System.out.println();
     }
 }

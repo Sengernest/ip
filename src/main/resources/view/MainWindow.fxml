@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sengernest.MainWindow">
+
+    <!-- Scrollable dialog area -->
+    <ScrollPane fx:id="scrollPane" prefWidth="400" prefHeight="540"
+                hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" AnchorPane.topAnchor="10"
+                AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="60">
+        <content>
+            <VBox fx:id="dialogContainer" spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+            </VBox>
+        </content>
+    </ScrollPane>
+
+    <!-- User input area -->
+    <HBox spacing="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+        <TextField fx:id="userInput" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="sendButton" text="Send"/>
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+    </HBox>
+
+</AnchorPane>
