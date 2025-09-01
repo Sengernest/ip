@@ -1,7 +1,5 @@
 package sengernest;
 
-import java.util.ArrayList;
-
 import sengernest.commands.Command;
 import sengernest.parser.Parser;
 import sengernest.storage.Storage;
@@ -9,66 +7,42 @@ import sengernest.tasks.TaskList;
 import sengernest.ui.Ui;
 
 /**
- * Entry point for Sengernest
+ * The main class for Sengernest.
  */
 public class Sengernest {
-    /** Path to the file where tasks are stored. */
-    private static final String FILE_PATH = "data/Sengernest.txt";
-
-    /** Handles loading and saving tasks to persistent storage. */
     private final Storage storage;
-
-    /** The list of tasks currently in memory. */
     private final TaskList tasks;
-
-    /** Handles user interactions and input/output. */
     private final Ui ui;
 
     /**
-     * Constructs a Sengernest instance.
+     * Constructs a new Sengernest instance.
      */
     public Sengernest() {
         ui = new Ui();
-        storage = new Storage(FILE_PATH);
+        storage = new Storage("data/Sengernest.txt");
         TaskList loadedTasks;
         try {
-            loadedTasks = new TaskList(new ArrayList<>(storage.load()));
+            loadedTasks = new TaskList(storage.load());
         } catch (Exception e) {
-            ui.displayError("[warn] Could not load tasks. Starting empty. Reason: " + e.getMessage());
+            ui.displayError("Could not load tasks. Starting empty: " + e.getMessage());
             loadedTasks = new TaskList();
         }
         tasks = loadedTasks;
     }
 
     /**
-     * Runs the main program loop.
+     * Processes a user input and returns a response as a string from the UI.
+     *
+     * @param input The user input string.
+     * @return The response message from the bot, or an error message if parsing or execution fails.
      */
-    public void run() {
-        ui.greet();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.newCommand();
-                ui.newLine();
-                Command command = Parser.parse(fullCommand);
-                if (command == null) {
-                    continue;
-                }
-                command.execute(tasks, ui, storage);
-                isExit = command.isExit();
-            } catch (Exception e) {
-                ui.displayError(e.getMessage());
-            } finally {
-                ui.newLine();
-            }
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            command.execute(tasks, ui, storage);
+            return ui.getLastMessage();
+        } catch (Exception e) {
+            return "[Error] " + (e.getMessage() != null ? e.getMessage() : e.toString());
         }
-        ui.close();
-    }
-    
-    /**
-     * The main entry point of the application.
-     */
-    public static void main(String[] args) {
-        new Sengernest().run();
     }
 }

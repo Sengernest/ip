@@ -9,7 +9,9 @@ import sengernest.ui.Ui;
  * Represents a command that searches for tasks containing a specific keyword.
  */
 public class FindCommand extends Command {
-    /** The keyword to search for in task descriptions. */
+    /**
+     * The keyword to search for in task descriptions.
+     */
     private final String keyword;
 
     /**
@@ -23,11 +25,11 @@ public class FindCommand extends Command {
 
     /**
      * Executes the find command: searches for tasks containing the keyword
-     * and displays the matching tasks using the UI.
+     * and sets the output message in the UI.
      *
      * @param tasks   the TaskList to search through
      * @param ui      the UI for displaying messages
-     * @param storage the Storage (not used in this command, but required by signature)
+     * @param storage the Storage (not used in this command)
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
@@ -41,8 +43,13 @@ public class FindCommand extends Command {
         if (matchingTasks.isEmpty()) {
             ui.displayMessage("No matching tasks found for: " + keyword);
         } else {
-            ui.displayMessage("Here are the matching tasks:");
-            new PrintListCommand().execute(matchingTasks, ui, storage);
+            StringBuilder sb = new StringBuilder("Here are the matching tasks:\n");
+            int count = 1;
+            for (Task t : matchingTasks.getTasks()) {
+                sb.append(count).append(". ").append(t.getTasking()).append("\n");
+                count++;
+            }
+            ui.displayMessage(sb.toString().trim());
         }
     }
 }

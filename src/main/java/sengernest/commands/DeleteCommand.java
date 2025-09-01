@@ -51,7 +51,7 @@ public class DeleteCommand extends Command {
                 ui.printList(tasks);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            ui.displayMessage("[Error] " + e.getMessage());
         }
     }
 }
