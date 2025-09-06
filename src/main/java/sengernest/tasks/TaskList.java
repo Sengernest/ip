@@ -29,6 +29,7 @@ public class TaskList {
      * Adds a task to the list.
      */
     public void addTask(Task task) {
+        assert task != null : "Cannot add null task to list";
         this.tasks.add(task);
     }
 
@@ -43,18 +44,21 @@ public class TaskList {
      * Retrieves the task at the specified index.
      */
     public Task getTask(int index) {
-        return this.tasks.get(index);
+        Task t = this.tasks.get(index);
+        assert t != null : "Task retrieved should not be null";
+        return t;
     }
 
     /**
      * Marks the task at the specified index as finished.
      */
     public boolean markTask(int index) {
-        Task task = getTask(index);
-        if (task.isFinished()) {
+        Task t = this.getTask(index);
+        assert t != null : "Task to mark should not be null";
+        if (t.isFinished()) {
             return false;
         }
-        task.finish();
+        t.finish();
         return true;
     }
 
@@ -62,11 +66,12 @@ public class TaskList {
      * Unmarks the task at the specified index (sets it as not finished).
      */
     public boolean unmarkTask(int index) {
-        Task task = getTask(index);
-        if (!task.isFinished()) {
+        Task t = this.getTask(index);
+        assert t != null : "Task to unmark should not be null";
+        if (t.isFinished()) {
             return false;
         }
-        task.unfinish();
+        t.unfinish();
         return true;
     }
 

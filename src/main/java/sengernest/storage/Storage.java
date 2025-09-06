@@ -19,12 +19,23 @@ import sengernest.tasks.ToDo;
  * Handles reading from and writing to the file system for task storage.
  */
 public class Storage {
-    private static final DateTimeFormatter DEADLINE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    private static final DateTimeFormatter EVENT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    /**
+     * Date format used for deadlines in the storage file.
+     */
+    private static final DateTimeFormatter DEADLINE_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
+    /**
+     * Date format used for events in the storage file.
+     */
+    private static final DateTimeFormatter EVENT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    /**
+     * File path for storing tasks.
+     */
     private final Path path;
 
     public Storage(String relativePath) {
+        assert relativePath != null && !relativePath.isBlank() : "File path must not be null or empty";
         this.path = Path.of(relativePath);
     }
 
@@ -42,12 +53,15 @@ public class Storage {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (!line.isEmpty()) {
-                    try {
-                        tasks.add(parseLine(line));
-                    } catch (IllegalArgumentException ex) {
-                        System.out.println("[warn] Skipping corrupted line: " + line);
-                    }
+    if (line.isEmpty()) {
+                    continue;
+                }
+                try {
+                    Task t = parseLine(line);
+                    assert t != null : "Parsed task should never be null";
+                    tasks.add(t);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("[warn] Skipping corrupted line: " + line);
                 }
             }
         }
@@ -62,11 +76,13 @@ public class Storage {
      * @throws IOException If the file cannot be written.
      */
     public void save(TaskList tasks) throws IOException {
+        assert tasks != null : "TaskList to save should not be null";
         ensureDirReady();
-        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            for (Task task : tasks.getTasks()) {
-                writer.write(task.toFileFormat());
-                writer.newLine();
+        try (BufferedWriter bw = Files.newBufferedWriter(path)) {
+            for (Task t : tasks.getTasks()) {
+                assert t != null : "Task in TaskList should not be null";
+                bw.write(t.toFileFormat());
+                bw.newLine();
             }
         }
     }
@@ -79,6 +95,7 @@ public class Storage {
         if (parent != null && !Files.exists(parent)) {
             Files.createDirectories(parent);
         }
+        assert parent == null || Files.exists(parent) : "Parent directory should exist after creation";
     }
 
     /**
@@ -89,6 +106,7 @@ public class Storage {
         if (!Files.exists(path)) {
             Files.createFile(path);
         }
+        assert Files.exists(path) : "Storage file should exist after ensureFileReady()";
     }
 
     /**
@@ -98,14 +116,14 @@ public class Storage {
      * @return Task represented by the line.
      */
     private Task parseLine(String line) {
+        assert line != null && !line.isBlank() : "Input line must not be null or blank";
         String[] parts = line.split(" \\| ");
-        if (parts.length < 3) {
-            throw new IllegalArgumentException("Too few fields");
-        }
+        assert parts.length >= 3 : "Line must have at least 3 parts";
 
         String type = parts[0].trim();
         boolean done = parts[1].trim().equals("1");
         String desc = parts[2].trim();
+        assert desc != null : "Task description should not be null";
 
         Task task;
         switch (type) {
@@ -113,10 +131,15 @@ public class Storage {
             task = new ToDo(desc);
             break;
         case "D":
-            task = parseDeadline(parts, desc);
+            assert parts.length >= 4 : "Deadline must have a date/time field";
+            LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
+            task = new Deadline(desc, deadlineDate);
             break;
         case "E":
-            task = parseEvent(parts, desc);
+            assert parts.length >= 5 : "Event must have start and end date/time";
+            LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
+            LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
+            task = new Event(desc, start, end);
             break;
         default:
             throw new IllegalArgumentException("Unknown task type: " + type);
@@ -125,7 +148,6 @@ public class Storage {
         if (done) {
             task.finish();
         }
-
         return task;
     }
 
@@ -136,7 +158,7 @@ public class Storage {
         if (parts.length < 4) {
             throw new IllegalArgumentException("Missing deadline date/time");
         }
-        LocalDateTime by = LocalDateTime.parse(parts[3].trim(), DEADLINE_FORMAT);
+        LocalDateTime by = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
         return new Deadline(desc, by);
     }
 
@@ -147,8 +169,8 @@ public class Storage {
         if (parts.length < 5) {
             throw new IllegalArgumentException("Missing event start/end date/time");
         }
-        LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_FORMAT);
-        LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_FORMAT);
+        LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
+        LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
         return new Event(desc, start, end);
     }
 }

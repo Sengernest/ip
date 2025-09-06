@@ -15,29 +15,43 @@ import javafx.util.Duration;
  */
 public class MainWindow {
 
-    /** Scrollable container for dialog messages. */
+    /**
+     * Scrollable container for dialog messages.
+     */
     @FXML
     private ScrollPane scrollPane;
 
-    /** Vertical container holding all dialog boxes. */
+    /**
+     * Vertical container holding all dialog boxes.
+     */
     @FXML
     private VBox dialogContainer;
 
-    /** TextField for user input. */
+    /**
+     * TextField for user input.
+     */
     @FXML
     private TextField userInput;
 
-    /** Button to send user input. */
+    /**
+     * Button to send user input.
+     */
     @FXML
     private Button sendButton;
 
-    /** The backend chatbot instance. */
+    /**
+     * The backend chatbot instance.
+     */
     private Sengernest sengernest;
 
-    /** Avatar image for the user. */
+    /**
+     * Avatar image for the user.
+     */
     private final Image userImage = new Image(getClass().getResourceAsStream("/images/user.jpg"));
 
-    /** Avatar image for the bot. */
+    /**
+     * Avatar image for the bot.
+     */
     private final Image botImage = new Image(getClass().getResourceAsStream("/images/bot.png"));
 
     /**
@@ -50,7 +64,14 @@ public class MainWindow {
         sengernest = new Sengernest();
         sendButton.setOnAction(e -> handleUserInput());
         userInput.setOnAction(e -> handleUserInput());
+
+        assert dialogContainer != null : "Dialog container should be initialized";
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
+        dialogContainer.getChildren().add(
+                DialogBox.getBotDialog("Hello, I'm Sengernest. What can I do for you today?", botImage)
+        );
     }
 
     /**
@@ -59,6 +80,7 @@ public class MainWindow {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        assert input != null : "User input should not be null";
         if (input.isBlank()) {
             return;
         }

@@ -43,6 +43,7 @@ public class Ui {
      * @param message Message string.
      */
     public void displayMessage(String message) {
+        assert message != null : "Message cannot be null";
         setLastMessage(message);
     }
 
@@ -52,6 +53,7 @@ public class Ui {
      * @param message Error message string.
      */
     public void displayError(String message) {
+        assert message != null : "Message cannot be null";
         setLastMessage("[Error] " + message);
     }
 
@@ -61,6 +63,7 @@ public class Ui {
      * @param tasks Task list.
      */
     public void printList(TaskList tasks) {
+        assert tasks != null : "TaskList should not be null";
         if (tasks.size() == 0) {
             setLastMessage("Your List is empty!");
         } else {

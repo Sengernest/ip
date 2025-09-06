@@ -28,6 +28,7 @@ public class Sengernest {
             loadedTasks = new TaskList();
         }
         tasks = loadedTasks;
+        assert tasks != null : "TaskList should never be null after initialisation";
     }
 
     /**
@@ -39,6 +40,7 @@ public class Sengernest {
     public String getResponse(String input) {
         try {
             Command command = Parser.parse(input);
+            assert command != null : "Parser should never return null command";
             command.execute(tasks, ui, storage);
             return ui.getLastMessage();
         } catch (Exception e) {
