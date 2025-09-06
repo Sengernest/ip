@@ -7,7 +7,9 @@ import sengernest.tasks.TaskList;
  */
 public class Ui {
 
-    /** Stores the last message for GUI display */
+    /**
+     * Stores the last message for GUI display
+     */
     private String lastMessage = "";
 
     /**

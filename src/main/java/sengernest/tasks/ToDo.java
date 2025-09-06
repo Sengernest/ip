@@ -17,17 +17,17 @@ public class ToDo extends Task {
     /**
      * Returns the task description with a To-Do type prefix.
      *
-     * @return The formatted task description, prefixed with "[T]".
+     * @return The formatted task description, prefixed with "[T] ".
      */
     @Override
     public String getTasking() {
-        return "[T]" + super.getTasking();
+        return "[T] " + super.getTasking();
     }
 
     /**
      * Returns the string representation of the task for saving to a file.
      *
-     * @return A string in file format, prefixed with "T".
+     * @return A string in file format, prefixed with "T ".
      */
     @Override
     public String toFileFormat() {

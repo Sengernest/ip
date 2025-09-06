@@ -19,20 +19,11 @@ import sengernest.tasks.ToDo;
  * Handles reading from and writing to the file system for task storage.
  */
 public class Storage {
-    /** Date format used for deadlines in the storage file. */
-    private static final DateTimeFormatter DEADLINE_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter DEADLINE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter EVENT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
-    /** Date format used for events in the storage file. */
-    private static final DateTimeFormatter EVENT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-    /** File path for storing tasks. */
     private final Path path;
 
-    /**
-     * Constructs a Storage object for a given file path.
-     *
-     * @param relativePath The relative path to the storage file.
-     */
     public Storage(String relativePath) {
         this.path = Path.of(relativePath);
     }
@@ -40,50 +31,48 @@ public class Storage {
     /**
      * Loads tasks from the storage file.
      *
-     * @return A list of tasks loaded from the file.
-     * @throws IOException If the file cannot be read or accessed.
+     * @return List of tasks read from the file.
+     * @throws IOException If the file cannot be read.
      */
     public ArrayList<Task> load() throws IOException {
         ensureFileReady();
         ArrayList<Task> tasks = new ArrayList<>();
 
-        try (BufferedReader br = Files.newBufferedReader(path)) {
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()) {
-                    continue;
-                }
-                try {
-                    tasks.add(parseLine(line));
-                } catch (IllegalArgumentException ex) {
-                    System.out.println("[warn] Skipping corrupted line: " + line);
+                if (!line.isEmpty()) {
+                    try {
+                        tasks.add(parseLine(line));
+                    } catch (IllegalArgumentException ex) {
+                        System.out.println("[warn] Skipping corrupted line: " + line);
+                    }
                 }
             }
         }
+
         return tasks;
     }
-    
+
     /**
      * Saves the given task list to the storage file.
      *
-     * @param tasks The task list to save.
-     * @throws IOException If the file cannot be written to.
+     * @param tasks Task list to save.
+     * @throws IOException If the file cannot be written.
      */
     public void save(TaskList tasks) throws IOException {
         ensureDirReady();
-        try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            for (Task t : tasks.getTasks()) {
-                bw.write(t.toFileFormat());
-                bw.newLine();
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+            for (Task task : tasks.getTasks()) {
+                writer.write(task.toFileFormat());
+                writer.newLine();
             }
         }
     }
 
     /**
-     * Ensures that the parent directory of the storage file exists, creating it if necessary.
-     *
-     * @throws IOException If directories cannot be created.
+     * Ensures that the parent directory exists.
      */
     private void ensureDirReady() throws IOException {
         Path parent = path.getParent();
@@ -93,9 +82,7 @@ public class Storage {
     }
 
     /**
-     * Ensures that the storage file exists, creating it if necessary.
-     *
-     * @throws IOException If the file cannot be created.
+     * Ensures that the storage file exists.
      */
     private void ensureFileReady() throws IOException {
         ensureDirReady();
@@ -105,11 +92,10 @@ public class Storage {
     }
 
     /**
-     * Parses a line from the storage file into a Task object.
+     * Parses a line from the file into a Task.
      *
-     * @param line The line from the file.
-     * @return The Task represented by the line.
-     * @throws IllegalArgumentException If the line is malformed or contains invalid data.
+     * @param line The line to parse.
+     * @return Task represented by the line.
      */
     private Task parseLine(String line) {
         String[] parts = line.split(" \\| ");
@@ -121,34 +107,48 @@ public class Storage {
         boolean done = parts[1].trim().equals("1");
         String desc = parts[2].trim();
 
-        Task t;
+        Task task;
         switch (type) {
         case "T":
-            t = new ToDo(desc);
+            task = new ToDo(desc);
             break;
         case "D":
-            if (parts.length < 4) {
-                throw new IllegalArgumentException("Missing deadline date/time");
-            }
-            LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
-            t = new Deadline(desc, deadlineDate);
+            task = parseDeadline(parts, desc);
             break;
         case "E":
-            if (parts.length < 5) {
-                throw new IllegalArgumentException("Missing event start/end date/time");
-            }
-            LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
-            LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
-            t = new Event(desc, start, end);
+            task = parseEvent(parts, desc);
             break;
         default:
             throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
         if (done) {
-            t.finish();
+            task.finish();
         }
 
-        return t;
+        return task;
+    }
+
+    /**
+     * Parses a Deadline from the storage line.
+     */
+    private Deadline parseDeadline(String[] parts, String desc) {
+        if (parts.length < 4) {
+            throw new IllegalArgumentException("Missing deadline date/time");
+        }
+        LocalDateTime by = LocalDateTime.parse(parts[3].trim(), DEADLINE_FORMAT);
+        return new Deadline(desc, by);
+    }
+
+    /**
+     * Parses an Event from the storage line.
+     */
+    private Event parseEvent(String[] parts, String desc) {
+        if (parts.length < 5) {
+            throw new IllegalArgumentException("Missing event start/end date/time");
+        }
+        LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_FORMAT);
+        LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_FORMAT);
+        return new Event(desc, start, end);
     }
 }

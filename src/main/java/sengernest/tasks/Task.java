@@ -4,10 +4,14 @@ package sengernest.tasks;
  * Represents a generic task.
  */
 public class Task {
-    /** The description of the task. */
+    /**
+     * The description of the task.
+     */
     private final String tasking;
 
-    /** Whether the task is finished. */
+    /**
+     * Whether the task is finished.
+     */
     private boolean finished;
 
     /**
@@ -22,8 +26,6 @@ public class Task {
 
     /**
      * Checks if the task description is empty.
-     *
-     * @return true if the task description is empty, false otherwise.
      */
     public boolean isEmpty() {
         return this.tasking.isEmpty();
@@ -31,8 +33,6 @@ public class Task {
 
     /**
      * Checks if the task has been marked as finished.
-     *
-     * @return true if the task is finished, false otherwise.
      */
     public boolean isFinished() {
         return this.finished;
@@ -54,21 +54,14 @@ public class Task {
 
     /**
      * Returns the task description with a finished status prefix.
-     *
-     * @return A string with "[X]" if finished or "[ ]" if not finished, followed by the task description.
      */
     public String getTasking() {
-        if (this.finished) {
-            return "[X] " + this.tasking;
-        } else {
-            return "[ ] " + this.tasking;
-        }
+        String status = this.finished ? "[X]" : "[ ]";
+        return status + " " + this.tasking;
     }
 
     /**
      * Returns the raw task description without any status prefix.
-     *
-     * @return The task description.
      */
     public String getTaskDescription() {
         return this.tasking;
@@ -76,14 +69,8 @@ public class Task {
 
     /**
      * Returns a string representing the task for saving to a file.
-     *
-     * @return The task string in file format.
      */
     public String toFileFormat() {
-        if (this.isFinished()) {
-            return "| 1 | " + this.getTaskDescription();
-        } else {
-            return "| 0 | " + this.getTaskDescription();
-        }
+        return "| " + (this.finished ? "1" : "0") + " | " + this.tasking;
     }
 }
