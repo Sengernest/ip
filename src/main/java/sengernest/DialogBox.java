@@ -33,6 +33,8 @@ public class DialogBox extends HBox {
      * @param img  the avatar image for this dialog box
      */
     private DialogBox(String text, Image img) {
+        assert text != null : "Dialog text cannot be null";
+        assert img != null : "Avatar image cannot be null";
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -51,6 +53,7 @@ public class DialogBox extends HBox {
      * Used for user messages to distinguish them from bot messages.
      */
     private void flip() {
+        assert getChildren().size() > 0 : "Dialog box should have children to flip";
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);

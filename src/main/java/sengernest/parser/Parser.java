@@ -34,6 +34,7 @@ public class Parser {
      * @throws Exception if the input is invalid or cannot be parsed
      */
     public static Command parse(String fullCommand) throws Exception {
+        assert fullCommand != null && !fullCommand.isBlank() : "Input command should not be null or blank";
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0].toLowerCase();
 

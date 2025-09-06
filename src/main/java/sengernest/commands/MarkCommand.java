@@ -11,7 +11,9 @@ import sengernest.ui.Ui;
  * Represents a command to mark a task as finished in the task list.
  */
 public class MarkCommand extends Command {
-    /** The zero-based index of the task to mark. */
+    /**
+     * The zero-based index of the task to mark.
+     */
     private final int index;
 
     /**

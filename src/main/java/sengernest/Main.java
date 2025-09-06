@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 /**
  * Main entry point for Sengernest GUI.
-  */
+ */
 public class Main extends Application {
 
     /**
@@ -19,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 600); // initial scene size
+        Scene scene = new Scene(fxmlLoader.load(), 400, 600);
         stage.setTitle("Sengernest");
 
         stage.setWidth(600);

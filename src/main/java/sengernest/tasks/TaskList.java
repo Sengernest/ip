@@ -6,7 +6,9 @@ import java.util.ArrayList;
  * Represents a list of tasks.
  */
 public class TaskList {
-    /** The list storing all tasks. */
+    /**
+     * The list storing all tasks.
+     */
     private final ArrayList<Task> tasks;
 
     /**
@@ -31,6 +33,7 @@ public class TaskList {
      * @param task The task to add.
      */
     public void addTask(Task task) {
+        assert task != null : "Cannot add null task to list";
         this.tasks.add(task);
     }
 
@@ -50,7 +53,9 @@ public class TaskList {
      * @return The task at the given index.
      */
     public Task getTask(int index) {
-        return this.tasks.get(index);
+        Task t = this.tasks.get(index);
+        assert t != null : "Task retrieved should not be null";
+        return t;
     }
 
     /**
@@ -60,10 +65,12 @@ public class TaskList {
      * @return true if the task was successfully marked, false if it was already finished.
      */
     public boolean markTask(int index) {
-        if (this.getTask(index).isFinished()) {
+        Task t = this.getTask(index);
+        assert t != null : "Task to mark should not be null";
+        if (t.isFinished()) {
             return false;
         }
-        this.getTask(index).finish();
+        t.finish();
         return true;
     }
 
@@ -74,10 +81,12 @@ public class TaskList {
      * @return true if the task was successfully unmarked, false if it was already not finished.
      */
     public boolean unmarkTask(int index) {
-        if (!this.getTask(index).isFinished()) {
+        Task t = this.getTask(index);
+        assert t != null : "Task to unmark should not be null";
+        if (t.isFinished()) {
             return false;
         }
-        this.getTask(index).unfinish();
+        t.unfinish();
         return true;
     }
 
@@ -89,7 +98,7 @@ public class TaskList {
     public int size() {
         return tasks.size();
     }
-    
+
     /**
      * Returns a copy of the task list.
      *
@@ -98,7 +107,7 @@ public class TaskList {
     public ArrayList<Task> getTasks() {
         return new ArrayList<>(tasks);
     }
-    
+
     /**
      * Returns whether the task list is empty.
      *
