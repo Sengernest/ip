@@ -9,7 +9,9 @@ import sengernest.ui.Ui;
  * Represents a command to add a new task to the task list.
  */
 public class AddTaskCommand extends Command {
-    /** The task to be added to the task list. */
+    /**
+     * The task to be added to the task list.
+     */
     private final Task task;
 
     /**

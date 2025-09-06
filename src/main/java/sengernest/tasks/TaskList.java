@@ -20,8 +20,6 @@ public class TaskList {
 
     /**
      * Constructs a TaskList with an initial list of tasks.
-     *
-     * @param tasks The initial tasks to populate the list.
      */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
@@ -29,8 +27,6 @@ public class TaskList {
 
     /**
      * Adds a task to the list.
-     *
-     * @param task The task to add.
      */
     public void addTask(Task task) {
         assert task != null : "Cannot add null task to list";
@@ -39,8 +35,6 @@ public class TaskList {
 
     /**
      * Removes the task at the specified index.
-     *
-     * @param index The index of the task to remove.
      */
     public void removeTask(int index) {
         this.tasks.remove(index);
@@ -48,9 +42,6 @@ public class TaskList {
 
     /**
      * Retrieves the task at the specified index.
-     *
-     * @param index The index of the task to retrieve.
-     * @return The task at the given index.
      */
     public Task getTask(int index) {
         Task t = this.tasks.get(index);
@@ -60,9 +51,6 @@ public class TaskList {
 
     /**
      * Marks the task at the specified index as finished.
-     *
-     * @param index The index of the task to mark.
-     * @return true if the task was successfully marked, false if it was already finished.
      */
     public boolean markTask(int index) {
         Task t = this.getTask(index);
@@ -76,9 +64,6 @@ public class TaskList {
 
     /**
      * Unmarks the task at the specified index (sets it as not finished).
-     *
-     * @param index The index of the task to unmark.
-     * @return true if the task was successfully unmarked, false if it was already not finished.
      */
     public boolean unmarkTask(int index) {
         Task t = this.getTask(index);
@@ -92,28 +77,22 @@ public class TaskList {
 
     /**
      * Returns the number of tasks in the list.
-     *
-     * @return The size of the task list.
      */
     public int size() {
-        return tasks.size();
+        return this.tasks.size();
     }
 
     /**
      * Returns a copy of the task list.
-     *
-     * @return An ArrayList containing all tasks.
      */
     public ArrayList<Task> getTasks() {
-        return new ArrayList<>(tasks);
+        return new ArrayList<>(this.tasks);
     }
 
     /**
      * Returns whether the task list is empty.
-     *
-     * @return A boolean.
      */
     public boolean isEmpty() {
-        return this.size() == 0;
+        return this.tasks.isEmpty();
     }
 }

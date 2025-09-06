@@ -7,13 +7,24 @@ import java.time.format.DateTimeFormatter;
  * Represents an Event task with a start and end time.
  */
 public class Event extends Task {
-    /** Formatter used for displaying date and time to the user. */
-    private static final DateTimeFormatter DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
+    /**
+     * Formatter used for displaying date and time to the user.
+     */
+    private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
 
-    /** The start time of the event. */
+    /**
+     * Formatter used for saving date/time to a file.
+     */
+    private static final DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    /**
+     * The start time of the event.
+     */
     private final LocalDateTime start;
 
-    /** The end time of the event. */
+    /**
+     * The end time of the event.
+     */
     private final LocalDateTime end;
 
     /**
@@ -36,7 +47,7 @@ public class Event extends Task {
      */
     @Override
     public String getTasking() {
-        return "[E]" + super.getTasking() + " (from: " + start.format(DISPLAY) + " to: " + end.format(DISPLAY) + ")";
+        return "[E] " + super.getTasking() + formatTimeRange();
     }
 
     /**
@@ -46,7 +57,7 @@ public class Event extends Task {
      */
     @Override
     public String getTaskDescription() {
-        return super.getTaskDescription() + " (from: " + start.format(DISPLAY) + " to: " + end.format(DISPLAY) + ")";
+        return super.getTaskDescription() + formatTimeRange();
     }
 
     /**
@@ -56,8 +67,19 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        DateTimeFormatter fileFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        return "E | " + (isFinished() ? "1" : "0") + " | " + super.getTaskDescription() + " | "
-                + start.format(fileFormat) + " | " + end.format(fileFormat);
+        return String.format("E | %d | %s | %s | %s",
+                isFinished() ? 1 : 0,
+                super.getTaskDescription(),
+                start.format(FILE_FORMAT),
+                end.format(FILE_FORMAT));
+    }
+
+    /**
+     * Returns the formatted time range for display.
+     *
+     * @return A string in the format " (from: start to: end)".
+     */
+    private String formatTimeRange() {
+        return " (from: " + start.format(DISPLAY_FORMAT) + " to: " + end.format(DISPLAY_FORMAT) + ")";
     }
 }

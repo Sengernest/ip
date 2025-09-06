@@ -34,11 +34,6 @@ public class Storage {
      */
     private final Path path;
 
-    /**
-     * Constructs a Storage object for a given file path.
-     *
-     * @param relativePath The relative path to the storage file.
-     */
     public Storage(String relativePath) {
         assert relativePath != null && !relativePath.isBlank() : "File path must not be null or empty";
         this.path = Path.of(relativePath);
@@ -47,18 +42,18 @@ public class Storage {
     /**
      * Loads tasks from the storage file.
      *
-     * @return A list of tasks loaded from the file.
-     * @throws IOException If the file cannot be read or accessed.
+     * @return List of tasks read from the file.
+     * @throws IOException If the file cannot be read.
      */
     public ArrayList<Task> load() throws IOException {
         ensureFileReady();
         ArrayList<Task> tasks = new ArrayList<>();
 
-        try (BufferedReader br = Files.newBufferedReader(path)) {
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()) {
+    if (line.isEmpty()) {
                     continue;
                 }
                 try {
@@ -70,14 +65,15 @@ public class Storage {
                 }
             }
         }
+
         return tasks;
     }
 
     /**
      * Saves the given task list to the storage file.
      *
-     * @param tasks The task list to save.
-     * @throws IOException If the file cannot be written to.
+     * @param tasks Task list to save.
+     * @throws IOException If the file cannot be written.
      */
     public void save(TaskList tasks) throws IOException {
         assert tasks != null : "TaskList to save should not be null";
@@ -92,9 +88,7 @@ public class Storage {
     }
 
     /**
-     * Ensures that the parent directory of the storage file exists, creating it if necessary.
-     *
-     * @throws IOException If directories cannot be created.
+     * Ensures that the parent directory exists.
      */
     private void ensureDirReady() throws IOException {
         Path parent = path.getParent();
@@ -105,9 +99,7 @@ public class Storage {
     }
 
     /**
-     * Ensures that the storage file exists, creating it if necessary.
-     *
-     * @throws IOException If the file cannot be created.
+     * Ensures that the storage file exists.
      */
     private void ensureFileReady() throws IOException {
         ensureDirReady();
@@ -118,11 +110,10 @@ public class Storage {
     }
 
     /**
-     * Parses a line from the storage file into a Task object.
+     * Parses a line from the file into a Task.
      *
-     * @param line The line from the file.
-     * @return The Task represented by the line.
-     * @throws IllegalArgumentException If the line is malformed or contains invalid data.
+     * @param line The line to parse.
+     * @return Task represented by the line.
      */
     private Task parseLine(String line) {
         assert line != null && !line.isBlank() : "Input line must not be null or blank";
@@ -134,31 +125,52 @@ public class Storage {
         String desc = parts[2].trim();
         assert desc != null : "Task description should not be null";
 
-        Task t;
+        Task task;
         switch (type) {
         case "T":
-            t = new ToDo(desc);
+            task = new ToDo(desc);
             break;
         case "D":
             assert parts.length >= 4 : "Deadline must have a date/time field";
             LocalDateTime deadlineDate = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
-            t = new Deadline(desc, deadlineDate);
+            task = new Deadline(desc, deadlineDate);
             break;
         case "E":
             assert parts.length >= 5 : "Event must have start and end date/time";
             LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
             LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
-            t = new Event(desc, start, end);
+            task = new Event(desc, start, end);
             break;
         default:
             throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
         if (done) {
-            t.finish();
+            task.finish();
         }
+        return task;
+    }
 
-        assert t != null : "Parsed task should never be null";
-        return t;
+    /**
+     * Parses a Deadline from the storage line.
+     */
+    private Deadline parseDeadline(String[] parts, String desc) {
+        if (parts.length < 4) {
+            throw new IllegalArgumentException("Missing deadline date/time");
+        }
+        LocalDateTime by = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
+        return new Deadline(desc, by);
+    }
+
+    /**
+     * Parses an Event from the storage line.
+     */
+    private Event parseEvent(String[] parts, String desc) {
+        if (parts.length < 5) {
+            throw new IllegalArgumentException("Missing event start/end date/time");
+        }
+        LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
+        LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
+        return new Event(desc, start, end);
     }
 }

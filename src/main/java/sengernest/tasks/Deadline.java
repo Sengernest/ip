@@ -7,10 +7,19 @@ import java.time.format.DateTimeFormatter;
  * Represents a Deadline task with a specific due date and time.
  */
 public class Deadline extends Task {
-    /** Formatter used for displaying the deadline to the user. */
-    private static final DateTimeFormatter DISPLAY = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
+    /**
+     * Formatter used for displaying the deadline to the user.
+     */
+    private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
 
-    /** The date and time by which the task should be completed. */
+    /**
+     * Formatter used for saving the deadline to a file.
+     */
+    private static final DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    /**
+     * The date and time by which the task should be completed.
+     */
     private final LocalDateTime by;
 
     /**
@@ -31,7 +40,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getTasking() {
-        return "[D]" + super.getTasking() + " (by: " + by.format(DISPLAY) + ")";
+        return "[D] " + super.getTasking() + formatDueDate();
     }
 
     /**
@@ -41,7 +50,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getTaskDescription() {
-        return super.getTaskDescription() + " (by: " + by.format(DISPLAY) + ")";
+        return super.getTaskDescription() + formatDueDate();
     }
 
     /**
@@ -51,9 +60,18 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileFormat() {
-        DateTimeFormatter fileFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        return "D | " + (isFinished() ? "1" : "0") + " | "
-                + super.getTaskDescription()
-                + " | " + by.format(fileFormat);
+        return String.format("D | %d | %s | %s",
+                isFinished() ? 1 : 0,
+                super.getTaskDescription(),
+                by.format(FILE_FORMAT));
+    }
+
+    /**
+     * Returns the formatted due date for display.
+     *
+     * @return A string in the format " (by: DATE)".
+     */
+    private String formatDueDate() {
+        return " (by: " + by.format(DISPLAY_FORMAT) + ")";
     }
 }
