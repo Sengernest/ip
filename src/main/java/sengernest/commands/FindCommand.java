@@ -32,7 +32,7 @@ public class FindCommand extends Command {
      * @param storage the Storage (not used in this command)
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         TaskList matchingTasks = new TaskList();
         for (Task task : tasks.getTasks()) {
             if (task.getTasking().toLowerCase().contains(keyword.toLowerCase())) {

@@ -31,13 +31,6 @@ public class Ui {
     }
 
     /**
-     * Greets the user with a welcome message.
-     */
-    public void greet() {
-        setLastMessage("Hello! I'm Sengernest");
-    }
-
-    /**
      * Displays a message.
      *
      * @param message Message string.

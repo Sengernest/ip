@@ -2,6 +2,8 @@ package sengernest.tasks;
 
 import java.util.ArrayList;
 
+import sengernest.exceptions.DuplicateTaskException;
+
 /**
  * Represents a list of tasks.
  */
@@ -28,8 +30,11 @@ public class TaskList {
     /**
      * Adds a task to the list.
      */
-    public void addTask(Task task) {
+    public void addTask(Task task) throws Exception{
         assert task != null : "Cannot add null task to list";
+        if (this.hasDuplicateTask(task)) {
+            throw new DuplicateTaskException("This task already exists!");
+        }
         this.tasks.add(task);
     }
 
@@ -95,4 +100,20 @@ public class TaskList {
     public boolean isEmpty() {
         return this.tasks.isEmpty();
     }
+
+    /**
+     * Checks if a task with the same description already exists.
+     *
+     * @param newTask the task to check
+     * @return true if a task with the same description exists
+     */
+    public boolean hasDuplicateTask(Task newTask) {
+        for (Task t : tasks) {
+            if (t.getTaskDescription().trim().equalsIgnoreCase(newTask.getTaskDescription().trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
