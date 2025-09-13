@@ -12,7 +12,7 @@ public class Task {
     /**
      * Whether the task is finished.
      */
-    private boolean finished;
+    private boolean isFinished;
 
     /**
      * Constructs a Task with the given description.
@@ -21,7 +21,7 @@ public class Task {
      */
     public Task(String tasking) {
         this.tasking = tasking;
-        this.finished = false;
+        this.isFinished = false;
     }
 
     /**
@@ -35,28 +35,28 @@ public class Task {
      * Checks if the task has been marked as finished.
      */
     public boolean isFinished() {
-        return this.finished;
+        return this.isFinished;
     }
 
     /**
      * Marks the task as finished.
      */
     public void finish() {
-        this.finished = true;
+        this.isFinished = true;
     }
 
     /**
      * Marks the task as not finished.
      */
     public void unfinish() {
-        this.finished = false;
+        this.isFinished = false;
     }
 
     /**
      * Returns the task description with a finished status prefix.
      */
     public String getTasking() {
-        String status = this.finished ? "[X]" : "[ ]";
+        String status = this.isFinished ? "[X]" : "[ ]";
         return status + " " + this.tasking;
     }
 
@@ -71,6 +71,6 @@ public class Task {
      * Returns a string representing the task for saving to a file.
      */
     public String toFileFormat() {
-        return "| " + (this.finished ? "1" : "0") + " | " + this.tasking;
+        return "| " + (this.isFinished ? "1" : "0") + " | " + this.tasking;
     }
 }

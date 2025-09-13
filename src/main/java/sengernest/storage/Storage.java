@@ -1,3 +1,19 @@
+/**
+ * Storage.java
+ * <p>
+ * Handles reading from and writing to the file system for task storage.
+ *
+ * <p><b>AI Assistance Note:</b> This file was written and refined with the help
+ * of ChatGPT (OpenAI). AI was used to:
+ * <ul>
+ *   <li>Generate and polish Javadoc comments</li>
+ *   <li>Explain constructor behavior and add assertion checks</li>
+ *   <li>Suggest structure for error handling and helper methods</li>
+ * </ul>
+ * </p>
+ *
+ * @author Ernest
+ */
 package sengernest.storage;
 
 import java.io.BufferedReader;
@@ -17,15 +33,20 @@ import sengernest.tasks.ToDo;
 
 /**
  * Handles reading from and writing to the file system for task storage.
+ * <p>
+ * (AI-assisted: Javadoc and some method-level refinements were produced with ChatGPT)
+ * </p>
  */
 public class Storage {
     /**
      * Date format used for deadlines in the storage file.
+     * (AI-assisted constant naming and docs)
      */
     private static final DateTimeFormatter DEADLINE_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
      * Date format used for events in the storage file.
+     * (AI-assisted constant naming and docs)
      */
     private static final DateTimeFormatter EVENT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
@@ -34,6 +55,13 @@ public class Storage {
      */
     private final Path path;
 
+    /**
+     * Constructs a {@code Storage} object using the given relative file path.
+     * (AI-assisted: Javadoc + assertion reasoning)
+     *
+     * @param relativePath the relative file path for this storage
+     * @throws AssertionError if {@code relativePath} is {@code null} or blank
+     */
     public Storage(String relativePath) {
         assert relativePath != null && !relativePath.isBlank() : "File path must not be null or empty";
         this.path = Path.of(relativePath);
@@ -53,7 +81,7 @@ public class Storage {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-    if (line.isEmpty()) {
+                if (line.isEmpty()) {
                     continue;
                 }
                 try {
@@ -149,28 +177,5 @@ public class Storage {
             task.finish();
         }
         return task;
-    }
-
-    /**
-     * Parses a Deadline from the storage line.
-     */
-    private Deadline parseDeadline(String[] parts, String desc) {
-        if (parts.length < 4) {
-            throw new IllegalArgumentException("Missing deadline date/time");
-        }
-        LocalDateTime by = LocalDateTime.parse(parts[3].trim(), DEADLINE_INPUT);
-        return new Deadline(desc, by);
-    }
-
-    /**
-     * Parses an Event from the storage line.
-     */
-    private Event parseEvent(String[] parts, String desc) {
-        if (parts.length < 5) {
-            throw new IllegalArgumentException("Missing event start/end date/time");
-        }
-        LocalDateTime start = LocalDateTime.parse(parts[3].trim(), EVENT_INPUT);
-        LocalDateTime end = LocalDateTime.parse(parts[4].trim(), EVENT_INPUT);
-        return new Event(desc, start, end);
     }
 }

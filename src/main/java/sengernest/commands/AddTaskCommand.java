@@ -33,12 +33,12 @@ public class AddTaskCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
-            tasks.addTask(task);        // may throw DuplicateTaskException
+            tasks.addTask(task);
             storage.save(tasks);
             ui.displayMessage("Added to list: " + task.getTasking());
             ui.printList(tasks);
         } catch (Exception e) {
-            ui.displayError(e.getMessage()); // only show error if exception occurs
+            ui.displayError(e.getMessage());
         }
     }
 }
