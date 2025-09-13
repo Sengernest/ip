@@ -30,7 +30,7 @@ public class TaskList {
     /**
      * Adds a task to the list.
      */
-    public void addTask(Task task) throws Exception{
+    public void addTask(Task task) throws Exception {
         assert task != null : "Cannot add null task to list";
         if (this.hasDuplicateTask(task)) {
             throw new DuplicateTaskException("This task already exists!");

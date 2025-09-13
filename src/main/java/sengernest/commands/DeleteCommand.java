@@ -11,7 +11,9 @@ import sengernest.ui.Ui;
  * Represents a command to delete a task from the task list.
  */
 public class DeleteCommand extends Command {
-    /** The zero-based index of the task to delete. */
+    /**
+     * The zero-based index of the task to delete.
+     */
     private final int index;
 
     /**

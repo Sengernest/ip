@@ -11,7 +11,9 @@ import sengernest.ui.Ui;
  * Represents a command to unmark a task as unfinished in the task list.
  */
 public class UnmarkCommand extends Command {
-    /** The zero-based index of the task to unmark. */
+    /**
+     * The zero-based index of the task to unmark.
+     */
     private final int index;
 
     /**
